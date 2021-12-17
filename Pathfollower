@@ -1,0 +1,119 @@
+/*
+
+ * To change this license header, choose License Headers in Project Properties.
+
+ * To change this template file, choose Tools | Templates
+
+ * and open the template in the editor.
+
+ */
+
+package robotics;
+
+/**
+
+ *
+
+ * @author SHIVAM
+
+ */
+
+import ch.aplu.robotsim.LegoRobot;
+
+import ch.aplu.robotsim.Gear;
+
+import ch.aplu.robotsim.RobotContext;
+
+import ch.aplu.robotsim.LightSensor;
+
+import ch.aplu.robotsim.SensorPort;
+
+public class PathFollowers {
+
+    public PathFollowers()
+
+    {
+
+        LegoRobot r = new LegoRobot();
+
+        Gear g = new Gear();
+
+        LightSensor rs= new LightSensor(SensorPort.S1);
+
+        LightSensor ls = new LightSensor(SensorPort.S2);
+
+        r.addPart(ls);
+
+        r.addPart(rs);
+
+        r.addPart(g);
+
+        while(true)
+
+        {
+
+            int a = rs.getValue();
+
+            int b = ls.getValue();
+
+            if(a<=1000 && b<=1000)
+
+            {
+
+                g.forward();
+
+            }
+
+            
+
+            if(b==0)
+
+            {
+
+                g.rightArc(0.02);
+
+                
+
+            }
+
+            if(a==0)
+
+            {
+
+                g.leftArc(0.02);
+
+            }
+
+//           
+
+            System.out.println("Sensor Value LS:  " +a);
+
+            System.out.println("Sensor Value RS:  " +b);
+
+        }
+
+        
+
+    }
+
+    
+
+    public static void main(String []arg)
+
+    {
+
+        new PathFollowers();
+
+    }
+
+    static
+
+    {
+
+        RobotContext.setStartPosition(50, 410);
+
+        RobotContext.useBackground("sprites/path.GIF");
+
+    }
+
+}
